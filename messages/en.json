@@ -139,5 +139,18 @@
     "contactUsSubtitle": "Here's our contacts and how to reach us, in Siem Reap",
     "contactUsBtn": "Find us",
     "contactUsLink": "en/contacts"
+  },
+  "bookingCancellation": {
+    "title": "Cancel Your Appointment",
+    "subtitle": "Please enter the email address used for the booking to verify and cancel your appointment.",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "your@email.com",
+    "cancelButton": "Cancel Appointment",
+    "processing": "Processing...",
+    "success": "Success!",
+    "error": "Error!",
+    "successMessage": "Your appointment has been successfully cancelled. You will receive a confirmation email shortly.",
+    "errorMessage": "Could not cancel the appointment. Please check your email or try again later.",
+    "invalidToken": "The cancellation link is invalid or has expired."
   }
 }
