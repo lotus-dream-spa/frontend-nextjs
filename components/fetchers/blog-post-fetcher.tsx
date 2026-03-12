@@ -1,29 +1,21 @@
-import { fetchStrapiData } from "@/lib/strapi";
 import PostRenderer from "@/components/renderers/post-renderer"; 
 import Paginator from "@/components/general/paginator"; 
-import { Article, StrapiResponse } from '@/types';
+import { StrapiArticle } from '@/types';
+import { fetchArticles } from "@/services/articles";
 
 export default async function BlogPostFetcher({ 
     currentPage = 1 
 }: { 
     currentPage?: number 
 }) {
-    let blogPosts: Article[] = [];
+    let blogPosts: StrapiArticle[] = [];
     let pagination = null;
 
     try {
-        const response = await fetchStrapiData('articles', {
-            populate: ['thumbnail'], // Assicurati che 'thumbnail' sia il nome giusto in Strapi
-            pagination: {
-                page: currentPage,
-                pageSize: 2, // Rimetti un numero realistico (es. 6 o 9)
-            },
-            sort: ['publishedAt:desc'],
-        }, 3600); // Cache 1 ora
+        const response = await fetchArticles(currentPage, 2); // pageSize 2 per ora come da codice originale
 
-        const typedResponse = response as StrapiResponse<Article[]>;
-        blogPosts = typedResponse.data || [];
-        pagination = typedResponse.meta?.pagination || null;
+        blogPosts = response.data || [];
+        pagination = response.meta?.pagination || null;
 
     } catch (err) {
         console.error("Fetch error:", err);

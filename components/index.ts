@@ -11,3 +11,10 @@ export { default as ReusableSliderElement } from "./general/reusable-slider";
 export { default as AnimatedTextSectionElement } from "./general/animated-text-section";
 export { default as TextHoverElement } from "./general/text-hover";
 export { default as WordsElement } from "./general/words";
+
+// Article Renderers
+export { default as ArticleRenderer } from "./renderers/article-renderer";
+export { default as ArticleHero } from "./renderers/article-hero";
+export { default as ArticleParagraph } from "./renderers/article-paragraph";
+export { default as ArticleQuote } from "./renderers/article-quote";
+export { default as ArticleCta } from "./renderers/article-cta";

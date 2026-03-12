@@ -186,6 +186,96 @@ export type ContentBlock =
   | CtaBlock
   | GalleryBlock;
 
+// --- New Types for Strapi Article (v5) ---
+
+export interface SeoModule {
+  __component: "functional-components.seo-module";
+  id: number;
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogType: string;
+  ogImage?: Image;
+  structuredData: any | null;
+}
+
+export interface HeroComponent {
+  __component: "graphic-component.hero";
+  id: number;
+  title: string;
+  subtitle: string;
+  textPositioning: "center" | "bottom" | null;
+  bgImage?: Image | Image[];
+  overlayClasses: string | null;
+  textClasses: string | null;
+  heroClasses: string | null;
+}
+
+export interface ParagraphComponent {
+  __component: "text-components.paragraph";
+  id: number;
+  text: string;
+  imagePosition: "left" | "right" | "up" | "down" | null;
+  image?: Image;
+  isImportant: boolean | null;
+  paragraphClasses: string | null;
+}
+
+export interface QuoteComponent {
+  __component: "text-components.quote";
+  id: number;
+  text: string;
+  author: string;
+  authorDescription: string;
+  authorDates: string;
+  quoteClasses: string | null;
+}
+
+export interface CtaComponent {
+  __component: "functional-components.cta";
+  id: number;
+  title: string;
+  caption: string;
+  contentPosition: "left" | "right" | "center" | null;
+  bgImage?: Image;
+  overlayClasses: string | null;
+  textClasses: string | null;
+  ctaClasses: string | null;
+}
+
+export type ArticleContent =
+  | HeroComponent
+  | ParagraphComponent
+  | QuoteComponent
+  | CtaComponent;
+
+export interface ArticleTag {
+  name: string;
+  description: string;
+}
+
+export interface StrapiArticle {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  caption: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  thumbnail: Image;
+  SEO: SeoModule[];
+  articleTags: ArticleTag[];
+  Content: ArticleContent[];
+}
+
+export interface StrapiArticlesResponse {
+  data: StrapiArticle[];
+  meta: Meta;
+}
+
 
 
 
