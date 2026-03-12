@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.42",
+    "@swc/helpers": "^0.5.19",
     "eslint-config-next": "^0.2.4",
     "framer-motion": "^11.3.31",
     "gsap": "^3.12.5",
