@@ -37,9 +37,9 @@ export default function ReusableSlider({
 			return reviews.map((review, i) => (
 				<SwiperSlide key={`review-${i}`}>
 					<div
-						className="p-7 rounded-[30px] swiper-slide h-[450px] xm:min-h-[500px] sm:min-h-[500px] cursor-grab flex flex-col justify-between"
+						className="p-7 rounded-lg h-[450px] xm:min-h-[500px] sm:min-h-[500px] cursor-grab !flex flex-col justify-between"
 						style={{ backgroundColor: sliderCardBgColor }}>
-						<div className="flex flex-col gap-3">
+						<div className="flex flex-col gap-3 grow">
 							{/* Stars */}
 							<div className="flex gap-1">
 								{Array.from({ length: 5 }).map((_, index) => (
@@ -87,7 +87,7 @@ export default function ReusableSlider({
 			slides.push(
 				<SwiperSlide key={`slide-${i}`}>
 					<div
-						className="p-7 rounded-[30px] swiper-slide min-h-[450px] xm:min-h-[500px] sm:min-h-[500px] cursor-grab"
+						className="p-7 rounded-[30px] min-h-[450px] xm:min-h-[500px] sm:min-h-[500px] cursor-grab !flex flex-col lg:!block"
 						style={{ backgroundColor: sliderCardBgColor }}>
 						<div className="flex flex-col gap-3">
 							<h2

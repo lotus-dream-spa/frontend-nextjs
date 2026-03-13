@@ -6,22 +6,22 @@ import { getStrapiMedia } from "@/lib/client-utils/media";
 import ReactMarkdown from "react-markdown";
 
 export default function ArticleParagraph({ data }: { data: ParagraphComponent }) {
-  const { text, image, imagePosition, isImportant } = data;
+  const { text, image, imagePosition, isImportant, cssClasses, paragraphClasses } = data;
   const imageUrl = getStrapiMedia(image?.url || null);
 
   const isVertical = imagePosition === "up" || imagePosition === "down";
   const isReverse = imagePosition === "right" || imagePosition === "down";
 
   // Container layout logic
-  const flexClass = isVertical 
-    ? `flex-col ${isReverse ? "flex-col-reverse" : ""}` 
+  const flexClass = isVertical
+    ? `flex-col ${isReverse ? "flex-col-reverse" : ""}`
     : `lg:flex-row ${isReverse ? "lg:flex-row-reverse" : ""} flex-col`;
 
   return (
-    <section className={`w-full py-12 md:py-20 max-w-7xl mx-auto ${isImportant ? "lg:px-6" : "px-6 "}`}>
-      <div className={`w-full ${isImportant ? "bg-lotus-dark-blue/40 backdrop-blur-md p-8 md:p-12 lg:rounded-[2.5rem] border border-white/10 shadow-2xl" : ""}`}>
+    <section className={`w-full py-12 md:py-20 max-w-7xl mx-auto ${isImportant ? "lg:px-6" : "px-6 "} ${cssClasses || ""}`}>
+      <div className={`w-full ${isImportant ? "bg-lotus-dark-blue/40 backdrop-blur-md p-8 md:p-12 lg:rounded-[2.5rem] border border-white/10 shadow-2xl" : ""} ${paragraphClasses || ""}`}>
         <div className={`flex gap-10 md:gap-16 items-center ${flexClass}`}>
-          
+
           {/* Text Column */}
           <div className="flex-1 w-full prose prose-invert prose-lg md:prose-xl max-w-none">
             <ReactMarkdown
@@ -50,14 +50,14 @@ export default function ArticleParagraph({ data }: { data: ParagraphComponent })
           {/* Image Column */}
           {imageUrl && (
             <div className={`flex-1 w-full ${isVertical ? "max-w-4xl mx-auto" : ""}`}>
-               <div className="relative aspect-[4/3] md:aspect-square overflow-hidden rounded-3xl border-4 border-white/10 shadow-2xl group">
-                  <Image
-                    src={imageUrl}
-                    alt="Article illustrative image"
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-[2s]"
-                  />
-               </div>
+              <div className="relative aspect-[4/3] md:aspect-square overflow-hidden rounded-3xl border-4 border-white/10 shadow-2xl group">
+                <Image
+                  src={imageUrl}
+                  alt="Article illustrative image"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-[2s]"
+                />
+              </div>
             </div>
           )}
         </div>

@@ -46,7 +46,7 @@ export default async function AboutUsPage(props: AboutUsPageProps) {
 				paragraphWidth="w-[90%]"
 				textColor="text-white"
 			/>
-			<div className="px-16">
+			<div className="px-16 bg-lotus-bronze">
 				<ImageCtaListElement items={masseuseItems} />
 			</div>
 

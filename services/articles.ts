@@ -16,6 +16,7 @@ export async function fetchArticles(page: number = 1, pageSize: number = 25): Pr
   const query = new URLSearchParams({
     'fields[0]': 'title',
     'fields[1]': 'caption',
+    'fields[2]': 'slug',
     'populate[thumbnail][fields][0]': 'url',
     'populate[thumbnail][fields][1]': 'formats',
     'populate[article_tags][fields][0]': 'name',
@@ -52,56 +53,38 @@ export async function fetchArticles(page: number = 1, pageSize: number = 25): Pr
   }
 }
 
-import { slugify } from '@/lib/client-utils/slugify';
-
 /**
- * Fetches a single article by slug (derived from title) with full content.
- * Robust approach: fetches all articles and compares slugified titles.
+ * Fetches a single article by slug with full content.
  */
-export async function fetchArticleByTitle(slug: string): Promise<StrapiArticle | null> {
+export async function fetchArticleBySlug(slug: string): Promise<StrapiArticle | null> {
   if (!slug) return null;
 
   try {
-    // 1. Fetch titles and documentIds of all articles to find a match
-    const listQuery = new URLSearchParams({
-      'fields[0]': 'title',
-      'pagination[pageSize]': '100', // Assume fewer than 100 articles for now
+    // 1. Fetch full article data using slug filter
+    const query = new URLSearchParams({
+      'filters[slug][$eq]': slug,
+      'populate[thumbnail][populate]': '*',
+      'populate[article_tags][populate]': '*',
+      'populate[SEO][populate]': '*',
+      'populate[Content][populate]': '*',
     });
 
-    const listRes = await fetch(`${STRAPI_URL}/api/articles?${listQuery.toString()}`, {
+    const res = await fetch(`${STRAPI_URL}/api/articles?${query.toString()}`, {
       headers: commonHeaders,
       next: { revalidate: 3600 },
     });
 
-    if (!listRes.ok) throw new Error(`Strapi list error: ${listRes.statusText}`);
-    const listJson = await listRes.json();
+    if (!res.ok) throw new Error(`Strapi fetch error: ${res.statusText}`);
+    const json = await res.json();
     
-    // 2. Find the article that matches the slug
-    const match = listJson.data?.find((article: any) => slugify(article.title) === slug);
+    // In Strapi v5, filtering by slug on a collection endpoint returns an array in 'data'
+    const article = json.data?.[0];
 
-    if (!match) {
+    if (!article) {
       console.warn(`No article found for slug: ${slug}`);
       return null;
     }
 
-    // 3. Fetch full article data using documentId (most reliable)
-    const fullQuery = new URLSearchParams({
-      'populate[thumbnail][populate]': '*',
-      'populate[article_tags][populate]': '*',
-      'populate[SEO][populate]': '*',
-      // Deep population for all potential components in the Content dynamic zone
-      'populate[Content][populate]': '*',
-    });
-
-    const fullRes = await fetch(`${STRAPI_URL}/api/articles/${match.documentId}?${fullQuery.toString()}`, {
-      headers: commonHeaders,
-      next: { revalidate: 3600 },
-    });
-
-    if (!fullRes.ok) throw new Error(`Strapi full fetch error: ${fullRes.statusText}`);
-    const fullJson = await fullRes.json();
-    const article = fullJson.data;
-    if (article) {
       // Normalization helper
       const normalizeMedia = (media: any, forceArray = false) => {
         if (!media) return forceArray ? [] : null;
@@ -126,6 +109,14 @@ export async function fetchArticleByTitle(slug: string): Promise<StrapiArticle |
           authorDescription: block.authorDescription || block.author_description,
           authorDates: block.authorDates || block.author_dates,
           bgImageMobile: normalizeMedia(block.bgImageMobile || block.bg_image_mobile),
+          buttonLabel: block.buttonLabel || block.button_label,
+          buttonLink: block.buttonLink || block.button_link,
+          isExternal: block.isExternal !== undefined ? block.isExternal : block.is_external,
+          cssClasses: block.cssClasses || block.css_classes,
+          heroClasses: block.heroClasses || block.hero_classes,
+          paragraphClasses: block.paragraphClasses || block.paragraph_classes,
+          quoteClasses: block.quoteClasses || block.quote_classes,
+          ctaClasses: block.ctaClasses || block.cta_classes,
         };
       });
 
@@ -142,7 +133,6 @@ export async function fetchArticleByTitle(slug: string): Promise<StrapiArticle |
         SEO: mappedSeo,
         Content: mappedContent
       } as StrapiArticle;
-    }
 
     return null;
   } catch (error) {

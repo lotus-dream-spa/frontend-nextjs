@@ -9,7 +9,7 @@ export default function Footer() {
 		<>
 			<div
 				id="footer"
-				className="w-full flex flex-col items-center padding-x bg-lotus-dark-blue lg:bg-lotus-blue py-10">
+				className="w-full flex flex-col items-center padding-x bg-lotus-dark-blue lg:bg-lotus-blue pt-10 lg:pb-10">
 
 				<div className="w-full grid grid-cols-1 lg:grid-cols-3">
 

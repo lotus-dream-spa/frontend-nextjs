@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { fetchArticleByTitle } from "@/services/articles";
+import { fetchArticleBySlug } from "@/services/articles";
 import ArticleRenderer from "@/components/renderers/article-renderer";
 import { getStrapiMedia } from "@/lib/client-utils/media";
 import Link from "next/link";
@@ -18,7 +18,7 @@ interface Props {
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = await fetchArticleByTitle(slug);
+  const article = await fetchArticleBySlug(slug);
 
   if (!article) {
     return {
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
  */
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const article = await fetchArticleByTitle(slug);
+  const article = await fetchArticleBySlug(slug);
 
   if (!article) {
     notFound();
@@ -58,7 +58,7 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <>
-    <main className="min-h-screen bg-lotus-blue flex flex-col pb-20">
+    <main className="min-h-screen bg-lotus-blue flex flex-col">
       {/* Navigation / Back Button */}
 
 

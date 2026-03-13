@@ -8,10 +8,10 @@ import { MoveRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ArticleCta({ data }: { data: CtaComponent }) {
-  const { title, caption, contentPosition, bgImage } = data;
+  const { title, caption, contentPosition, bgImage, buttonLabel, buttonLink, isExternal, cssClasses, ctaClasses } = data;
   const imageUrl = getStrapiMedia(bgImage?.url || null);
 
-  const getPositionClass = () => {
+  const getAlignmentClass = () => {
     switch (contentPosition) {
       case "left": return "items-start text-left";
       case "right": return "items-end text-right";
@@ -20,12 +20,12 @@ export default function ArticleCta({ data }: { data: CtaComponent }) {
   };
 
   return (
-    <section className="w-full py-12 md:py-16 lg:px-6">
-      <div className="lg:max-w-7xl w-full mx-auto min-h-[500px] md:h-[400px] relative lg:rounded-3xl overflow-hidden group shadow-2xl lg:border lg:border-white/10">
+    <section className={`w-full py-12 !pb-0 md:py-20 max-w-7xl mx-auto lg:px-6 ${cssClasses || ""}`}>
+      <div className={`lg:max-w-7xl w-full mx-auto min-h-[500px] md:h-[450px] relative lg:rounded-3xl overflow-hidden group shadow-2xl lg:border lg:border-white/10 ${ctaClasses || ""}`}>
         {/* Background Image */}
         {imageUrl ? (
           <div className="absolute inset-0 z-0">
-             <Image
+            <Image
               src={imageUrl}
               alt={title || "CTA Background"}
               fill
@@ -37,8 +37,8 @@ export default function ArticleCta({ data }: { data: CtaComponent }) {
           <div className="absolute inset-0 bg-lotus-blue" />
         )}
 
-        {/* Content */}
-        <div className={`relative z-10 w-full h-full flex flex-col justify-center p-8 md:p-20 ${getPositionClass()}`}>
+        {/* Content - Absolute inset-0 ensures it fills the parent for vertical centering */}
+        <div className={`absolute inset-0 z-10 flex flex-col justify-center p-8 md:p-20 ${getAlignmentClass()}`}>
           <h2 className="text-3xl md:text-6xl font-agr text-white mb-6 leading-tight max-w-3xl">
             {title}
           </h2>
@@ -48,18 +48,22 @@ export default function ArticleCta({ data }: { data: CtaComponent }) {
             </p>
           )}
 
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link 
-              href="/treatments"
-              className="inline-flex items-center gap-4 bg-lotus-bronze hover:bg-lotus-light-gold text-lotus-blue font-bold px-10 py-5 rounded-full text-xl transition-all duration-300 shadow-xl"
+          {buttonLabel && buttonLink && (
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Explore Now
-              <MoveRight className="w-6 h-6" />
-            </Link>
-          </motion.div>
+              <Link
+                href={buttonLink}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="inline-flex items-center gap-4 bg-lotus-bronze hover:bg-lotus-light-gold text-lotus-blue font-bold px-10 py-5 rounded-full text-xl transition-all duration-300 shadow-xl"
+              >
+                {buttonLabel}
+                <MoveRight className="w-6 h-6" />
+              </Link>
+            </motion.div>
+          )}
         </div>
 
         {/* Animated Glow on Hover */}

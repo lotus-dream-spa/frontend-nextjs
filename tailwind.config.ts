@@ -33,5 +33,14 @@ const config: Config = {
     }
   },
   plugins: [],
+  safelist: [
+    {
+      pattern: /^(m|p|mb|mt|ml|mr|pb|pt|pl|pr|gap|w|h|opacity|bg|text|border|rounded|shadow)-/,
+      variants: ['sm', 'md', 'lg', 'xl'],
+    },
+    'items-start', 'items-center', 'items-end',
+    'justify-start', 'justify-center', 'justify-end',
+    'text-left', 'text-center', 'text-right'
+  ],
 };
 export default config;

@@ -12,18 +12,20 @@ export default function ArticleRenderer({ content }: { content: ArticleContent[]
   return (
     <div className="w-full bg-lotus-blue flex flex-col">
       {content.map((block, index) => {
+        const key = `${block.__component}-${block.id || index}`;
+        
         switch (block.__component) {
           case "graphic-component.hero":
-            return <ArticleHero key={block.id || index} data={block} />;
+            return <ArticleHero key={key} data={block} />;
           
           case "text-components.paragraph":
-            return <ArticleParagraph key={block.id || index} data={block} />;
+            return <ArticleParagraph key={key} data={block} />;
           
           case "text-components.quote":
-            return <ArticleQuote key={block.id || index} data={block} />;
+            return <ArticleQuote key={key} data={block} />;
           
           case "functional-components.cta":
-            return <ArticleCta key={block.id || index} data={block} />;
+            return <ArticleCta key={key} data={block} />;
           
           default:
             // @ts-ignore - Handle unexpected component types

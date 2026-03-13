@@ -12,20 +12,7 @@ export type TmarqueeProps = {
    className: string;
 };
 
-export type Tcardsprops = {
-   i: number,
-   title: string,
-   para: string,
-   heading1: string,
-   heading2: string,
-   src: StaticImageData,
-   href: string,
-   bgColor: string,
-   textColor: string,
-   linkColor: string,
-   progress: MotionValue<number>,
-   range?: any,
-};
+
 
 export type TParagraphProps = {
    paragraph: string;
@@ -129,62 +116,7 @@ export interface Image {
   publishedAt: string;
 }
 
-export interface ParagraphBlock {
-  __component: "text-components.paragraph";
-  id: number;
-  text: string;
-  cssClasses: string;
-  imagePosition: string;
-  imageAlt: string;
-  image: Image | null; // Assuming the image can be null if not provided
-}
 
-export interface HeroBlock {
-  __component: "image-components.hero";
-  id: number;
-  title: string;
-  caption: string;
-  imageAlt: string;
-  cssClasses: string;
-  bgImage: Image; // Assuming this is a single image object
-}
-
-export interface QuoteBlock {
-  __component: "text-components.quote";
-  id: number;
-  text: string;
-  author: string;
-  authorInfo: string;
-  authorLifespan: string;
-  cssClasses: string;
-}
-
-export interface CtaBlock {
-  __component: "functional-components.cta";
-  id: number;
-  title: string;
-  subtitle: string;
-  paragraph: string;
-  buttonLabel: string;
-  buttonHref: string;
-  cssClasses: string;
-  displayMode: string;
-}
-
-export interface GalleryBlock {
-  __component: "image-components.gallery";
-  id: number;
-  caption: string;
-  displayMode: string;
-  images: Image[]; // Assuming this is an array of image objects
-}
-
-export type ContentBlock =
-  | ParagraphBlock
-  | HeroBlock
-  | QuoteBlock
-  | CtaBlock
-  | GalleryBlock;
 
 // --- New Types for Strapi Article (v5) ---
 
@@ -211,6 +143,7 @@ export interface HeroComponent {
   overlayClasses: string | null;
   textClasses: string | null;
   heroClasses: string | null;
+  cssClasses: string | null;
 }
 
 export interface ParagraphComponent {
@@ -221,6 +154,7 @@ export interface ParagraphComponent {
   image?: Image;
   isImportant: boolean | null;
   paragraphClasses: string | null;
+  cssClasses: string | null;
 }
 
 export interface QuoteComponent {
@@ -231,6 +165,7 @@ export interface QuoteComponent {
   authorDescription: string;
   authorDates: string;
   quoteClasses: string | null;
+  cssClasses: string | null;
 }
 
 export interface CtaComponent {
@@ -239,10 +174,14 @@ export interface CtaComponent {
   title: string;
   caption: string;
   contentPosition: "left" | "right" | "center" | null;
+  buttonLabel?: string;
+  buttonLink?: string;
+  isExternal?: boolean;
   bgImage?: Image;
   overlayClasses: string | null;
   textClasses: string | null;
   ctaClasses: string | null;
+  cssClasses: string | null;
 }
 
 export type ArticleContent =
@@ -279,35 +218,9 @@ export interface StrapiArticlesResponse {
 
 
 
-export interface StrapiResponse<T> {
-  data: T;
-  meta: {
-    pagination: Pagination;
-  };
-}
 
-export interface Article {
-  id: number;
-  documentId: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  seoTitle: string;
-  seoDescription: string;
-  caption: string;
-  slug: string;
-  openGraphTitle: string;
-  openGraphDescription: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  thumbnail: Image;
-  openGraphImage: Image;
-  contentBlocks: ContentBlock[];
-  relatedArticles: any[]; // Consider defining a more specific type if the structure of related articles is known.
-  articles: any[]; // Consider defining a more specific type if the structure of articles is known.
-  tags: any[]; // Consider defining a more specific type if the structure of tags is known.
-}
+
+
 
 export interface Pagination {
   page: number;
@@ -320,10 +233,7 @@ export interface Meta {
   pagination: Pagination;
 }
 
-export interface ArticleData {
-  data: Article[];
-  meta: Meta;
-}
+
 
 export interface Customer {
   // Campi semplici
