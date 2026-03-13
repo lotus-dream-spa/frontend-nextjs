@@ -566,9 +566,9 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                                             <p className="text-sm text-gray-300 line-clamp-2">{t.description}</p>
                                         </div>
                                         {isExpanded && (
-                                            <div className="px-6 pb-6 pt-0 animate-in slide-in-from-top-2 duration-300">
+                                            <div className="lg:px-6 lg:pb-6 pt-0 animate-in slide-in-from-top-2 duration-300">
                                                 <div className="h-px w-full bg-white/10 mb-4"></div>
-                                                <p className="text-xs text-lotus-bronze uppercase font-bold tracking-widest mb-3">Available Packages</p>
+                                                <p className="text-xs text-lotus-bronze text-center lg:text-left uppercase font-bold tracking-widest mb-3">Available Packages</p>
                                                 <div className="space-y-3">
                                                     {t.packages?.sort((a, b) => a.minutes - b.minutes).map(pkg => (
                                                         <div key={pkg.id} className="flex items-center justify-between p-3 rounded bg-black/20 hover:bg-black/40 border border-transparent hover:border-white/10 transition-all">
@@ -581,9 +581,9 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                                                                 <button
                                                                     disabled={isQuotaMet}
                                                                     onClick={(e) => { e.stopPropagation(); addSelection(t, pkg); }}
-                                                                    className={`px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-all ${isQuotaMet ? 'bg-gray-600 text-gray-400 cursor-not-allowed opacity-50' : 'bg-lotus-gold text-lotus-blue hover:bg-white hover:scale-105 shadow-lg'}`}
+                                                                    className={`px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-all ${isQuotaMet ? 'hidden text-gray-400 cursor-not-allowed opacity-50' : 'block bg-lotus-gold text-lotus-blue hover:bg-white hover:scale-105 shadow-lg'}`}
                                                                 >
-                                                                    {isQuotaMet ? 'Full' : 'Add +'}
+                                                                    {isQuotaMet ? 'Full' : '+'}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -634,7 +634,7 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
         const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
         const firstDayIndex = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
         const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-        const timeSlots = ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
+        const timeSlots = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
 
         // Helper Time
         const timeToMinutes = (str: string) => {
@@ -811,17 +811,17 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
         // --- NUOVO LAYOUT DI CONFERMA (POST-BOOKING) ---
         if (isConfirmed) {
             return (
-                <div className="animate-in fade-in zoom-in duration-500 w-full max-w-2xl bg-white/5 border border-lotus-gold/40 p-10 rounded-lg shadow-2xl backdrop-blur-md text-center">
-                    <div className="flex justify-center mb-6">
+                <div className="animate-in fade-in zoom-in duration-500 w-full max-w-2xl bg-white/5 border border-lotus-gold/40 lg:p-10 rounded-lg shadow-2xl backdrop-blur-md text-center">
+                    <div className="flex justify-center mb-6 mt-8 lg:mt-0">
                         <div className="bg-lotus-gold rounded-full p-4 shadow-[0_0_30px_rgba(212,175,55,0.3)]">
                             <Check size={48} className="text-lotus-blue" />
                         </div>
                     </div>
 
-                    <h2 className="text-4xl font-agr text-white mb-4">Booking Confirmed!</h2>
+                    <h2 className="text-2xl lg:text-4xl font-agr text-white mb-4">Booking Confirmed!</h2>
 
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left bg-white/5 p-6 rounded-lg border border-white/10 mb-2 mt-16">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left bg-white/5 p-6 lg:rounded-lg border border-white/10 mb-2 mt-16">
                         <div className="space-y-1">
                             <p className="text-lotus-bronze text-[10px] uppercase font-bold tracking-[0.2em]">Reservation Details</p>
                             {isContactMode ? (
@@ -860,13 +860,13 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                         </div>
                     </div>
 
-                    <p className="text-gray-400 text-sm mb-8 px-4">
+                    <p className="text-gray-400 text-sm mb-4 lg:mb-8 px-4">
                         Please arrive 10 minutes before your scheduled time. We look forward to seeing you.
                     </p>
 
                     <button
                         onClick={() => window.location.href = '/'}
-                        className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold py-3 px-10 rounded transition-all flex items-center gap-2 mx-auto"
+                        className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold mb-8 lg:mb-0 py-3 px-10 rounded transition-all flex items-center gap-2 mx-auto"
                     >
                         Return to Home
                     </button>
@@ -876,36 +876,36 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
 
         // --- LAYOUT DI REVISIONE (IL TUO ORIGINALE) ---
         return (
-            <div className="animate-in fade-in slide-in-from-right-8 duration-500 w-full max-w-2xl bg-white/5 border border-lotus-gold/20 p-8 rounded-lg shadow-2xl backdrop-blur-sm">
-                <h2 className="text-3xl font-agr text-white mb-8 text-center">Confirm Reservation</h2>
+            <div className="animate-in fade-in slide-in-from-right-8 duration-500 w-full max-w-2xl bg-white/5 border border-lotus-gold/20 rounded-lg shadow-2xl backdrop-blur-sm">
+                <h2 className="text-3xl font-agr text-white mb-8 text-center pt-8 lg:pt-0">Confirm Reservation</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-white mb-8">
                     <div className="space-y-1">
-                        <p className="text-lotus-bronze text-xs uppercase font-bold tracking-widest mb-2">Guest Details</p>
-                        <div className="text-xl font-medium flex items-center gap-2">
+                        <p className="text-lotus-bronze text-xs uppercase font-bold tracking-widest mb-2 ps-4 lg:ps-0">Guest Details</p>
+                        <div className="text-xl font-medium flex items-center gap-2 ps-4 lg:ps-0">
                             {formData.name || 'Guest'}
                             {persons > 1 && <span className="text-sm text-lotus-gold bg-lotus-gold/10 px-2 py-0.5 rounded-full border border-lotus-gold/20">Party of {persons}</span>}
                         </div>
-                        <div className="text-gray-400 text-sm flex items-center gap-2"><Mail size={14} /> {formData.email}</div>
-                        <div className="text-gray-400 text-sm flex items-center gap-2"><Phone size={14} /> {formData.phone}</div>
-                        <div className="text-gray-400 text-sm flex items-center gap-2 mt-1"><Globe size={14} /> Language: {formData.isKhmer ? 'Khmer' : 'English'}</div>
+                        <div className="text-gray-400 text-sm flex items-center gap-2 ps-4 lg:ps-0"><Mail size={14} /> {formData.email}</div>
+                        <div className="text-gray-400 text-sm flex items-center gap-2 ps-4 lg:ps-0"><Phone size={14} /> {formData.phone}</div>
+                        <div className="text-gray-400 text-sm flex items-center gap-2 mt-1 ps-4 lg:ps-0"><Globe size={14} /> Language: {formData.isKhmer ? 'Khmer' : 'English'}</div>
                     </div>
                     <div className="space-y-1">
-                        <p className="text-lotus-bronze text-xs uppercase font-bold tracking-widest mb-2">Date & Time</p>
+                        <p className="text-lotus-bronze text-xs uppercase font-bold tracking-widest mb-2 ps-4 lg:ps-0">Date & Time</p>
                         {isContactMode ? (
-                            <div className="flex items-center gap-2 text-lg font-medium text-lotus-gold italic">Contact Requested</div>
+                            <div className="flex items-center gap-2 text-lg font-medium text-lotus-gold italic ps-4 lg:ps-0">Contact Requested</div>
                         ) : (
                             <>
-                                <div className="flex items-center gap-2 text-lg font-medium"><CalendarIcon size={18} className="text-lotus-gold" /> {formData.date?.toLocaleDateString()}</div>
-                                <div className="flex items-center gap-2 text-2xl font-bold text-white"><Clock size={20} className="text-lotus-gold" /> {formData.time}</div>
+                                <div className="flex items-center gap-2 text-lg font-medium ps-4 lg:ps-0"><CalendarIcon size={18} className="text-lotus-gold" /> {formData.date?.toLocaleDateString()}</div>
+                                <div className="flex items-center gap-2 text-2xl font-bold text-white ps-4 lg:ps-0"><Clock size={20} className="text-lotus-gold" /> {formData.time}</div>
                             </>
                         )}
                     </div>
 
                     <div className="md:col-span-2 border-t border-white/10 pt-6 mt-2">
-                        <p className="text-lotus-bronze text-xs uppercase font-bold tracking-widest mb-3">{isContactMode ? 'Preference' : `Selected Treatments (${selections.length})`}</p>
+                        <p className="text-lotus-bronze text-xs uppercase font-bold tracking-widest mb-3 ps-4 lg:ps-0">{isContactMode ? 'Preference' : `Selected Treatments (${selections.length})`}</p>
                         {isContactMode ? (
-                            <div className="bg-white/5 p-4 rounded border border-white/10 text-white flex items-center gap-3">
+                            <div className="bg-white/5 p-4 rounded border border-white/10 text-white flex items-center gap-3 ps-4 lg:ps-0">
                                 {contactPreference === 'email' ? <Mail className="text-lotus-gold" /> : <Phone className="text-lotus-gold" />}
                                 <div>
                                     <div className="font-bold">Contact via {contactPreference}</div>
@@ -915,7 +915,7 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                         ) : (
                             <>
                                 {calculatingAssignment && <div className="text-xs text-lotus-gold animate-pulse mb-2">Assigning therapists...</div>}
-                                <div className="bg-white/5 rounded border border-white/10 divide-y divide-white/5">
+                                <div className="bg-white/5 rounded border border-white/10 divide-y divide-white/5 ps-4 lg:ps-0">
                                     {selections.map((sel, idx) => {
                                         const assigned = assignedMasseuses[idx];
                                         const masseuseName = assigned ? (assigned.attributes?.name || assigned.name) : null;
@@ -926,7 +926,7 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                                                     <div className="text-xs text-gray-500 uppercase font-bold mb-1">Guest {idx + 1}</div>
                                                     <div className="font-semibold text-lotus-gold">{sel.treatment.title}</div>
                                                     <div className="text-sm text-gray-400 flex items-center gap-1">
-                                                        {sel.pkg.minutes} Minutes Session
+                                                        {sel.pkg.minutes} Minutes
                                                         {masseuseName && (
                                                             <>
                                                                 <span>with</span>
@@ -940,8 +940,8 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                                         );
                                     })}
                                     <div className="p-4 bg-lotus-gold/10 flex justify-between items-center">
-                                        <div className="font-bold text-white uppercase tracking-wider">Total Amount</div>
-                                        <div className="text-3xl text-lotus-gold">{formatPrice(grandTotal)}</div>
+                                        <div className="font-bold text-white uppercase tracking-wider">Total</div>
+                                        <div className="text-xl lg:text-3xl text-lotus-gold">{formatPrice(grandTotal)}</div>
                                     </div>
                                 </div>
                             </>
@@ -949,7 +949,7 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                     </div>
                 </div>
 
-                <div className="flex justify-between items-center pt-6 border-t border-white/10">
+                <div className="flex flex-col lg:flex-row justify-between items-center pt-6 border-t border-white/10 gap-8 lg:gap-0">
                     <button onClick={prevStep} className="text-white hover:text-lotus-gold underline underline-offset-4 transition-colors">Modify Details</button>
                     <button
                         disabled={isSubmitting || calculatingAssignment}
@@ -991,7 +991,7 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                                             method: 'POST',
                                             headers: { 'Content-Type': 'application/json' },
                                             body: JSON.stringify(payload)
-                                        }).then(res => { if (!res.ok) throw new Error("A booking failed"); return res.json(); });
+                                        }).then(res => { if (!res.ok) throw new Error("A booking failed"); console.log(res); return res.json(); });
                                     });
 
                                 await Promise.all(bookingPromises);
@@ -1004,7 +1004,7 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
                                 setIsSubmitting(false);
                             }
                         }}
-                        className={`bg-lotus-gold hover:bg-lotus-light-gold text-lotus-blue font-bold py-3 px-12 rounded shadow-lg transform hover:scale-105 transition-all flex items-center gap-2 ${isSubmitting || calculatingAssignment ? 'opacity-70 cursor-wait' : ''}`}
+                        className={`bg-lotus-gold hover:bg-lotus-light-gold text-lotus-blue font-bold mb-8 lg:mb-0 py-3 px-12 rounded shadow-lg transform hover:scale-105 transition-all flex items-center gap-2 ${isSubmitting || calculatingAssignment ? 'opacity-70 cursor-wait' : ''}`}
                     >
                         {isSubmitting ? <>Processing...</> : <><Check size={20} /> Confirm Booking</>}
                     </button>
