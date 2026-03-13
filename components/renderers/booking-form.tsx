@@ -876,8 +876,8 @@ export default function BookingForm({ initialTreatments }: BookingFormProps) {
 
         // --- LAYOUT DI REVISIONE (IL TUO ORIGINALE) ---
         return (
-            <div className="animate-in fade-in slide-in-from-right-8 duration-500 w-full max-w-2xl bg-white/5 border border-lotus-gold/20 rounded-lg shadow-2xl backdrop-blur-sm">
-                <h2 className="text-3xl font-agr text-white mb-8 text-center pt-8 lg:pt-0">Confirm Reservation</h2>
+            <div className="animate-in fade-in slide-in-from-right-8 duration-500 w-full max-w-2xl lg:p-8 bg-white/5 border border-lotus-gold/20 rounded-lg shadow-2xl backdrop-blur-sm">
+                <h2 className="text-3xl font-agr text-white mb-8 text-center pt-8 lg:pt-0 lg:mt-8">Confirm Reservation</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-white mb-8">
                     <div className="space-y-1">
